@@ -1,11 +1,11 @@
 {
-  "name": "meogo-remote-tizenbrew",
-  "appName": "MEO Go - Comando Samsung (v2 login)",
-  "version": "0.2.0",
-  "description": "Correcao login: navegar email-password por Baixo/Enter, suporte dominios de autenticacao MEO; navegacao azul e diagnostico.",
+  "name": "meo-azul-login-v3",
+  "appName": "MEO AZUL V3 - Login Corrigido",
+  "version": "0.3.0",
+  "description": "Edicao independente V3 para contornar cache do modulo antigo; login email/password e navegacao azul.",
   "packageType": "mods",
   "websiteURL": "https://tv.meo.pt/pt",
-  "main": "main.js",
+  "main": "main_meo_azul_v3.js",
   "keys": [
     "ColorF1Green",
     "ColorF3Blue"

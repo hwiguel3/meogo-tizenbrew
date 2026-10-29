@@ -70,3 +70,28 @@ O ramo `main` mantem a versao anterior. Remover do TizenBrew apenas o modulo ant
 A mensagem `MEO AZUL V3 | V3 NOVA ATIVA` confirma que o script novo foi realmente carregado.
 No formulario: Baixo/Enter para ir de email a password, Cima para voltar.
 Nao foi validado fisicamente na Samsung.
+
+
+## MEO DRAG V4 — arrasto manual experimental
+
+Instala o ramo novo em **TizenBrew → Add GitHub Module**:
+
+`hwiguel3/meogo-tizenbrew@meo-drag-v4`
+
+Nome esperado: **MEO DRAG V4 - Cursor e Arrasto** (versão 0.4.0). Este ramo tem identificador próprio (`meo-drag-remote-v4`) e novo ficheiro principal (`main_meo_drag_v4.js`) para reduzir problemas de cache das versões anteriores.
+
+### Controlos
+- **Verde** ou **Amarelo**: alternar entre seleção azul e modo cursor.
+- **Setas**: mover o cursor para cima, baixo, esquerda e direita.
+- **OK no modo cursor**: agarrar a peça (enviar `pointerdown`/`mousedown` sintéticos).
+- **Setas com a peça agarrada**: tentar arrastar (enviar `pointermove`/`mousemove`); o cursor fica amarelo.
+- **OK outra vez**: largar (enviar `pointerup`/`mouseup`).
+- **Voltar**: cancelar o arrasto.
+- **Vermelho** no modo cursor: clique normal, sem iniciar arrasto.
+- **Azul**: diagnóstico do motor de vídeo.
+
+O modo drag é **completamente manual**: o utilizador escolhe a peça e o destino. Não reconhece nem resolve CAPTCHAs. Os eventos JavaScript sintetizados não são eventos de rato confiáveis (têm `isTrusted=false`) e poderão ser ignorados por mecanismos de segurança. Um iframe de outro domínio também impede acesso ao conteúdo a partir deste módulo. Nestes casos, a peça poderá não se mover apesar do cursor amarelo.
+
+Para testar: fecha e reabre o TizenBrew depois de remover o módulo anterior, adiciona a referência com `@meo-drag-v4`, confirma o aviso `MEO DRAG V4`, ativa o cursor com Verde, coloca-o sobre a peça, prime OK para agarrar, move com setas e prime OK para largar.
+
+Esta versão passou validação de sintaxe, mas **ainda não foi testada na Samsung Q60A real**.

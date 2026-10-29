@@ -597,7 +597,7 @@
   function start() {
     if (!initUI()) { setTimeout(start, 250); return; }
     registerColorKeys();
-    document.addEventListener('keydown', onKey, true);
+    // Captura unica no topo da pagina, evitando executar a mesma tecla duas vezes.
     window.addEventListener('keydown', onKey, true);
     // O resgate e ativado apenas quando o foco passa para um iframe de login
     // ou de seguranca. Pode nao ser suficiente em todas as TVs/WebViews.

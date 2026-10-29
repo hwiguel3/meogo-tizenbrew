@@ -163,9 +163,9 @@
     if (mode === 'cursor') {
       if (cursor.parentElement !== document.body) document.body.appendChild(cursor);
       ring.style.display = 'none';
-      cursor.style.setProperty('display', 'block', 'important');
-      cursor.style.setProperty('visibility', 'visible', 'important');
-      cursor.style.setProperty('opacity', '1', 'important');
+      cursor.style.display = 'block';
+      cursor.style.visibility = 'visible';
+      cursor.style.opacity = '1';
       cursor.style.left = Math.round(cursorX - 12) + 'px';
       cursor.style.top = Math.round(cursorY - 12) + 'px';
       return;

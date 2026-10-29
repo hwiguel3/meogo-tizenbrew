@@ -1,11 +1,11 @@
 {
-  "name": "meo-foco-v5",
-  "appName": "MEO FOCO V5 - Cursor CAPTCHA",
-  "version": "0.5.0",
-  "description": "Tenta recuperar controlo do comando em iframes de autenticacao e inicia cursor automaticamente; arrasto manual experimental.",
+  "name": "meo-overlay-v6",
+  "appName": "MEO OVERLAY V6 - Ponteiro Frente",
+  "version": "0.6.0",
+  "description": "Testa cursor por cima de iframe/CAPTCHA via top-layer popover ou raiz HTML com z-index maximo; arrasto manual experimental.",
   "packageType": "mods",
   "websiteURL": "https://tv.meo.pt/pt",
-  "main": "main_meo_foco_v5.js",
+  "main": "main_meo_overlay_v6.js",
   "keys": [
     "ColorF0Red",
     "ColorF1Green",

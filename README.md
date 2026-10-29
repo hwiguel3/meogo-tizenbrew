@@ -119,3 +119,18 @@ Nome: `MEO FOCO V5 - Cursor CAPTCHA`, versao `0.5.0`, id `meo-foco-v5`, script `
 6. Quando possivel fora do CAPTCHA, premir Azul para inspecionar `Teclas cor` e `Foco atual`.
 
 **Limites:** o browser nao encaminha eventos do iframe de outro dominio para o documento principal. A recuperacao de foco nao e garantida no TizenBrew e pode interferir com o teclado virtual do CAPTCHA. Os eventos de arrastamento sintetico têm `isTrusted=false` e podem ser ignorados pelo desafio; o modulo nao descodifica nem resolve automaticamente verificacoes de seguranca. Solucao robusta para um CAPTCHA que requer rato fisico: uma aplicacao Tizen com suporte a ponteiro no `config.xml` do launcher ou outro metodo de verificacao acessivel, e nao apenas uma alteracao ao modulo JavaScript.
+
+
+## MEO OVERLAY V6 — ponteiro sobre o CAPTCHA (29/10/2026)
+
+Referencia para o TizenBrew: `hwiguel3/meogo-tizenbrew@meo-overlay-v6`
+
+Identidade propria: `meo-overlay-v6`, versao `0.6.0`, script `main_meo_overlay_v6.js`.
+
+**Alteracao:** o cursor deixa de ser um simples filho do `body`. Quando o modo cursor esta ativo, tenta usar o nivel superior de desenho (`popover`, se existir). Caso contrario, desloca o ponteiro para `document.documentElement` com `z-index:2147483647` e `pointer-events:none`. Nao modifica nem esconde o CAPTCHA.
+
+Ao aparecer o CAPTCHA, o cursor devera permanecer visivel (se a janela do CAPTCHA estiver no mesmo plano de desenho da pagina). Premir Verde/Amarelo alterna o modo cursor. No modo cursor, as setas deslocam o ponteiro, OK inicia/termina arrasto manual e Vermelho efetua um clique normal.
+
+**Diagnostico:** apos sair da verificacao, abre o painel Azul e le as linhas `Cursor layer`, `Cursor parent` e `Popover disponivel`. Um motor Tizen antigo podera nao suportar popover.
+
+**Limites:** o iframe do CAPTCHA de outro dominio pode ser desenhado numa camada nativa superior e continuar a esconder este cursor. Mesmo visivel, o arrasto por eventos JavaScript sinteticos pode nao ser aceite pela verificacao (`isTrusted=false`). Para controlar uma verificacao de forma fiavel podera ser necessaria uma camada de input nativa na app TizenBrew ou um rato/touchpad real. Nao e garantido que funcione nesta Samsung.

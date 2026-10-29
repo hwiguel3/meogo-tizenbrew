@@ -7,6 +7,7 @@
   "websiteURL": "https://tv.meo.pt/pt",
   "main": "main_meo_drag_v4.js",
   "keys": [
+    "ColorF0Red",
     "ColorF1Green",
     "ColorF2Yellow",
     "ColorF3Blue"

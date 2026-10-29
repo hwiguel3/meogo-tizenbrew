@@ -151,3 +151,38 @@ A versão **MEO CURSOR 6.1 - Restaurado** retira essas alterações, volta ao m�
 4. Se o cursor continuar invisível fora do CAPTCHA, abrir Azul e verificar `Ponteiro` e `Cursor ativo` no diagnóstico (se possível).
 
 **Limitação importante:** se o CAPTCHA for apresentado numa camada gráfica ou iframe separado e superior, este módulo JavaScript não consegue garantir que o ponteiro apareça por cima, nem que o CAPTCHA aceite arrastamentos sintéticos. Não esconder o CAPTCHA nem tentar contornar a verificação. Preferir os métodos de acessibilidade suportados pelo próprio CAPTCHA, um rato nativo ou uma aplicação Tizen com suporte a ponteiro nativo, se disponível.
+
+---
+
+## MEO CURSOR V7 — teste de cursor numa camada isolada
+
+**Instalação TizenBrew:** `hwiguel3/meogo-tizenbrew@meo-cursor-v7`
+
+Nome no ecrã: **MEO CURSOR V7 - Camada Estavel** (versão 0.7.0).
+Novo ID do módulo: `meo-cursor-v7`; novo script `main_meo_cursor_v7.js`. As versões anteriores continuam nos seus ramos.
+
+### O que muda na V7
+- O ponteiro mantém-se dentro do `body`, como na V5/V6.1, mas passa a estar num `div` isolado colocado **no fim do `body`**, com o maior `z-index` CSS, em vez de ser movido para `html` ou `popover` (o método da V6 que o fez desaparecer).
+- Um pequeno marcador **MEO V7 | cursor ativo** fica no canto superior esquerdo quando o cursor está ligado, permitindo confirmar se o desenho da sobreposição está visível.
+- Conserva a recuperação de foco de iframe da V5, o cursor com botão Verde/Amarelo, as setas, o arrasto manual com OK e o clique normal com Vermelho.
+- O botão Azul mostra um diagnóstico adicional: número de iframes presentes, quantos são inacessíveis por domínio e estado da camada de desenho. O URL completo (que poderia conter tokens de autenticação) deixou de ser mostrado.
+
+### Teste na televisão
+1. Remove a versão MEO anterior e encerra/reabre o TizenBrew.
+2. Adiciona `hwiguel3/meogo-tizenbrew@meo-cursor-v7`.
+3. Antes de abrir o CAPTCHA, prime **Verde** e verifica que aparecem o cursor azul e o marcador **MEO V7**.
+4. Quando o CAPTCHA abrir, verifica **se o marcador e o cursor ficam por cima da janela**, e não apenas do fundo.
+5. Se ficarem por cima, tenta manualmente o arrasto (OK, setas, OK). Não há reconhecimento automático da peça correta.
+6. Se ficarem por trás, não insistas no `z-index`: o CAPTCHA poderá estar numa camada gráfica nativa ou `iframe` que o WebView/este módulo não deixa controlar. Nesse caso, a solução precisa de suporte de ponteiro ao nível da aplicação, não de mais JavaScript.
+7. Depois de sair do CAPTCHA, prime **Azul** para ver os dados de diagnóstico. Não publiques imagens com email ou códigos pessoais visíveis.
+
+**Limites conhecidos:** o cursor é **simulado**, não é um dispositivo de entrada nativo; eventos `MouseEvent`/`PointerEvent` enviados por JavaScript têm `isTrusted=false` e podem ser ignorados pelo CAPTCHA. Um `iframe` de outro domínio não permite ao módulo mexer nos seus elementos internos. Esta versão foi validada quanto à sintaxe mas **não** num televisor real.
+
+### Alternativa técnica caso a V7 continue por trás do CAPTCHA
+A Samsung documenta que, em modelos 2021+, o apontador de rato pode estar desativado por defeito em aplicações Tizen. A forma suportada de o ativar é definir **na aplicação hospedeira TizenBrew** (não no `package.json` deste módulo), no `config.xml` da aplicação:
+```xml
+<tizen:setting pointing-device-support="enable"/>
+```
+Alterar esse ficheiro exige compilar/assinar e reinstalar a aplicação TizenBrew ou outra aplicação Tizen própria. Isso permite testar **rato físico ou dispositivo de apontar compatível**, não transforma as setas do comando num rato nativo e não garante que o CAPTCHA aceite arrastamentos sintetizados.
+
+Documentação Samsung: https://developer.samsung.com/smarttv/develop/guides/user-interaction/mouse.html

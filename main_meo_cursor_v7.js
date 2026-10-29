@@ -11,7 +11,7 @@
   if (!/(^|\.)meo\.pt$/i.test(window.location.hostname) &&
       !/^login\.telecom\.pt$/i.test(window.location.hostname)) return;
   if (window.__meoTizenRemoteV7) return;
-  window.__meoTizenRemoteCursor61 = true;
+  window.__meoTizenRemoteV7 = true;
 
   var PREFIX = 'meotb-';
   var BLUE = '#168cff';

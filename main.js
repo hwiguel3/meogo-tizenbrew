@@ -1,5 +1,5 @@
 /*
- * MEO Go - Comando Samsung v0.1.0
+ * MEO Go - Comando Samsung v0.2.0
  * Modulo nao oficial de modificacao de site para TizenBrew.
  * Usa a pagina oficial https://tv.meo.pt/pt - sem reimplementar o player.
  * Nao guarda credenciais/PIN, nao modifica DRM, video, cookies ou pedidos de rede.
@@ -7,9 +7,11 @@
  */
 (function () {
   'use strict';
-  if (!/(^|\.)tv\.meo\.pt$/i.test(window.location.hostname)) return;
-  if (window.__meoTizenRemoteV1) return;
-  window.__meoTizenRemoteV1 = true;
+  // O login pode abrir num dominio diferente do site TV.
+  if (!/(^|\.)meo\.pt$/i.test(window.location.hostname) &&
+      !/^login\.telecom\.pt$/i.test(window.location.hostname)) return;
+  if (window.__meoTizenRemoteV2) return;
+  window.__meoTizenRemoteV2 = true;
 
   var PREFIX = 'meotb-';
   var BLUE = '#168cff';
@@ -116,7 +118,7 @@
   }
   function notify(message) {
     if (!initUI()) return;
-    toast.textContent = 'MEO Go v1 | ' + message;
+    toast.textContent = 'MEO Go v2 | ' + message;
     toast.style.display = 'block';
     toastDeadline = Date.now() + 2600;
   }
@@ -179,6 +181,37 @@
     }
     later();
   }
+  // Campos do login ID MEO: navegar sem ler nem alterar o email/password.
+  function loginFields() {
+    var inputs = document.querySelectorAll('input');
+    var email = null, password = null, i, input, type, hint;
+    for (i = 0; i < inputs.length; i++) {
+      input = inputs[i];
+      type = (input.getAttribute('type') || 'text').toLowerCase();
+      if (input.disabled || input.readOnly || type === 'hidden' || !visible(input, false)) continue;
+      if (type === 'password') { if (!password) password = input; continue; }
+      if (!/^(text|email|tel|search)$/.test(type)) continue;
+      hint = [type, input.getAttribute('name'), input.getAttribute('id'),
+              input.getAttribute('autocomplete'), input.getAttribute('placeholder')].join(' ').toLowerCase();
+      if (!email || /email|e-mail|username|utilizador|login/.test(hint)) email = input;
+    }
+    return password ? { email: email, password: password } : null;
+  }
+  function loginStep(code) {
+    if (mode !== 'focus' || (code !== 38 && code !== 40 && code !== 13)) return false;
+    var fields = loginFields();
+    if (!fields || !fields.email) return false;
+    var active = document.activeElement;
+    var from = active === fields.email || active === fields.password ? active : selected;
+    var to = null;
+    if (from === fields.email && (code === 40 || code === 13)) to = fields.password;
+    if (from === fields.password && code === 38) to = fields.email;
+    if (!to) return false;
+    try { if (active && active !== to && active.blur) active.blur(); } catch (e) {}
+    select(to, true);
+    notify(to === fields.password ? 'Password selecionada: OK para escrever' : 'Email selecionado');
+    return true;
+  }
   function nearest(items, code, origin) {
     var best = null, score = Infinity, i, el, p, dx, dy, fw, side, candidate;
     for (i = 0; i < items.length; i++) {
@@ -224,6 +257,7 @@
     return moveScroll(document.scrollingElement || document.documentElement, code);
   }
   function navigate(code) {
+    if (loginStep(code)) return;
     var targets = collect();
     if (!targets.length) { scrollFallback(code); later(); return; }
     if (!selected || targets.indexOf(selected) < 0) {
@@ -303,7 +337,7 @@
     var eme = !!(navigator.requestMediaKeySystemAccess);
     var types = ['video/mp4; codecs="avc1.42E01E"', 'application/vnd.apple.mpegurl'];
     var video = document.createElement('video');
-    list.push('MEO Go TizenBrew - diagnostico v1');
+    list.push('MEO Go TizenBrew - diagnostico v2');
     list.push('URL: ' + location.href);
     list.push('Motor: ' + navigator.userAgent);
     list.push('Tizen API: ' + (!!window.tizen));
@@ -376,9 +410,12 @@
       // Sem modal, deixar o site/TizenBrew tratar Voltar e sair normalmente.
       return;
     }
+    // Prioridade ao formulario de login: Baixo/Enter avanca email -> password,
+    // Cima regressa password -> email. Funciona tambem apos fechar o teclado TV.
+    if (mode === 'focus' && loginStep(code)) { stop(ev); return; }
     if (isEditable(document.activeElement) && mode === 'focus') {
-      // Permitir escrita, edicao do PIN e teclado virtual do site.
-      // A seta para baixo permite abandonar o campo para navegar no resto da pagina.
+      // Nao interferir com digitacao, teclas horizontais nem submissao do formulario.
+      // Fora do login, Baixo permite abandonar um campo de texto.
       if (code !== 40) return;
       try { document.activeElement.blur(); } catch (e2) {}
     }
@@ -397,6 +434,9 @@
   function start() {
     if (!initUI()) { setTimeout(start, 250); return; }
     document.addEventListener('keydown', onKey, true);
+    document.addEventListener('focusin', function (e) {
+      if (isActionable(e.target) && !isOwn(e.target)) select(e.target, false);
+    }, true);
     window.addEventListener('resize', later, false);
     window.addEventListener('scroll', later, true);
     document.addEventListener('click', function (e) {
@@ -415,7 +455,7 @@
       if (location.href !== lastPageURL) { lastPageURL = location.href; selected = null; }
       updateHighlight();
     }, 900);
-    notify('Comando ativo | setas/OK | verde=cursor | azul=diagnostico');
+    notify('v2 ativa | email: Baixo/Enter = password | verde=cursor');
     later();
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start);

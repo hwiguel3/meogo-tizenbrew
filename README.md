@@ -1,4 +1,4 @@
-# MEO Go para TizenBrew – Comando Samsung v1
+# MEO Go para TizenBrew – Comando Samsung v2
 
 Módulo **experimental e não oficial** para a Samsung Q60A (Tizen 6.0), com a interface original do MEO Go em `https://tv.meo.pt/pt`.
 
@@ -24,7 +24,7 @@ Módulo **experimental e não oficial** para a Samsung Q60A (Tizen 6.0), com a i
 
 ## Testes iniciais recomendados
 
-1. Abre a página e verifica o aparecimento da mensagem `MEO Go v1 | Comando ativo`.
+1. Abre a página e verifica o aparecimento da mensagem `MEO Go v2 | v2 ativa`.
 2. Testa as setas, o OK, o scroll e o botão Verde antes do login.
 3. Inicia sessão com a tua conta MEO através da página oficial, sem partilhar as credenciais.
 4. Tenta reproduzir um canal. Se falhar, carrega no botão Azul e fotografa os resultados técnicos (oculta dados pessoais e URL se tiver parâmetros privados).
@@ -45,3 +45,12 @@ Módulo **experimental e não oficial** para a Samsung Q60A (Tizen 6.0), com a i
 - `README.md`: instruções e limitações.
 
 Versão 0.1.0 – 29/10/2026.
+## Atualizacao v0.2.0 – correcao do formulario de login
+
+- Suporte a paginas oficiais de login em subdominios `meo.pt` e `login.telecom.pt` para navegacao com comando apos redirecionamento (quando o TizenBrew injeta o script nessas paginas).
+- No campo de **email**, `Baixo` ou `Enter` seleciona diretamente o campo da **password**; no campo password, `Cima` regressa ao email.
+- Foco nativo sincronizado com o contorno azul. Nao recolhe nem altera credenciais.
+- Se o teclado virtual da Samsung capturar as setas, usar **Voltar** para o fechar e depois **Baixo**.
+- Confirmar aviso `MEO Go v2` ao entrar no formulario: se nao aparecer, o script pode nao estar injetado no dominio/iframe de autenticacao.
+
+Teste pendente em Samsung Q60A fisica.

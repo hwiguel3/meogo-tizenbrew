@@ -1,11 +1,11 @@
 {
-  "name": "meo-cursor-restaurado-61",
-  "appName": "MEO CURSOR 6.1 - Restaurado",
-  "version": "0.6.1",
-  "description": "Reverte a alteracao de camadas da v6, recupera ponteiro visivel e mantem controlo manual do comando; nao garante ponteiro acima do CAPTCHA.",
+  "name": "meo-cursor-v7",
+  "appName": "MEO CURSOR V7 - Camada Estavel",
+  "version": "0.7.0",
+  "description": "Cursor isolado em overlay no BODY sem popover; teste de visibilidade por cima do iframe e diagnostico sem credenciais. Arrasto manual experimental.",
   "packageType": "mods",
   "websiteURL": "https://tv.meo.pt/pt",
-  "main": "main_meo_cursor_61.js",
+  "main": "main_meo_cursor_v7.js",
   "keys": [
     "ColorF0Red",
     "ColorF1Green",

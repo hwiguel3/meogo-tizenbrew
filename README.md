@@ -95,3 +95,27 @@ O modo drag é **completamente manual**: o utilizador escolhe a peça e o destin
 Para testar: fecha e reabre o TizenBrew depois de remover o módulo anterior, adiciona a referência com `@meo-drag-v4`, confirma o aviso `MEO DRAG V4`, ativa o cursor com Verde, coloca-o sobre a peça, prime OK para agarrar, move com setas e prime OK para largar.
 
 Esta versão passou validação de sintaxe, mas **ainda não foi testada na Samsung Q60A real**.
+
+
+## MEO FOCO V5 – recuperação experimental de teclas no CAPTCHA
+
+**Instalar como modulo separado no TizenBrew:** `hwiguel3/meogo-tizenbrew@meo-foco-v5`.
+
+Nome: `MEO FOCO V5 - Cursor CAPTCHA`, versao `0.5.0`, id `meo-foco-v5`, script `main_meo_foco_v5.js`.
+
+**Alteracoes tecnicas:**
+- Regista explicitamente Red, Green, Yellow, Blue na API `tizen.tvinputdevice` quando acessivel; falhas de permissao ficam visiveis no painel Azul.
+- Ouvinte de `keydown` unico em `window` na fase de captura.
+- Quando um iframe de CAPTCHA/autenticacao recebe o foco e estamos num formulario de login, tenta devolver o foco a um elemento invisivel do modulo na pagina principal.
+- Se recuperar o foco, **ativa o cursor automaticamente**, sem ser necessario premir Verde. Mostra `MEO FOCO V5 | CAPTCHA/IFRAME: foco recuperado`.
+- Preserva as setas, OK para agarrar/largar, Voltar para cancelar e Vermelho para clique normal.
+
+**Teste:**
+1. Remover modulos MEO antigos, reiniciar TizenBrew e adicionar `hwiguel3/meogo-tizenbrew@meo-foco-v5`.
+2. Confirmar no inicio a mensagem `MEO FOCO V5`.
+3. Abrir o CAPTCHA. Esperar que apareca automaticamente o cursor azul. Nao carregar em Verde se o cursor ja apareceu: Verde alterna entre cursor e selecao.
+4. Com o cursor no CAPTCHA, confirmar se as setas o deslocam. O modo de arrasto continua a ser manual.
+5. Se nao aparecer o cursor, tentar Verde. Se continuar inativo, o iframe pode continuar a capturar as teclas fora do alcance deste modulo.
+6. Quando possivel fora do CAPTCHA, premir Azul para inspecionar `Teclas cor` e `Foco atual`.
+
+**Limites:** o browser nao encaminha eventos do iframe de outro dominio para o documento principal. A recuperacao de foco nao e garantida no TizenBrew e pode interferir com o teclado virtual do CAPTCHA. Os eventos de arrastamento sintetico têm `isTrusted=false` e podem ser ignorados pelo desafio; o modulo nao descodifica nem resolve automaticamente verificacoes de seguranca. Solucao robusta para um CAPTCHA que requer rato fisico: uma aplicacao Tizen com suporte a ponteiro no `config.xml` do launcher ou outro metodo de verificacao acessivel, e nao apenas uma alteracao ao modulo JavaScript.

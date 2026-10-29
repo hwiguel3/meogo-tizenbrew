@@ -1,11 +1,11 @@
 {
-  "name": "meo-drag-remote-v4",
-  "appName": "MEO DRAG V4 - Cursor e Arrasto",
-  "version": "0.4.0",
-  "description": "Modo experimental de arrasto por comando: verde cursor, OK agarrar/largar, setas mover; login e diagnostico.",
+  "name": "meo-foco-v5",
+  "appName": "MEO FOCO V5 - Cursor CAPTCHA",
+  "version": "0.5.0",
+  "description": "Tenta recuperar controlo do comando em iframes de autenticacao e inicia cursor automaticamente; arrasto manual experimental.",
   "packageType": "mods",
   "websiteURL": "https://tv.meo.pt/pt",
-  "main": "main_meo_drag_v4.js",
+  "main": "main_meo_foco_v5.js",
   "keys": [
     "ColorF0Red",
     "ColorF1Green",

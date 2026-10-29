@@ -1,11 +1,11 @@
 {
-  "name": "meo-overlay-v6",
-  "appName": "MEO OVERLAY V6 - Ponteiro Frente",
-  "version": "0.6.0",
-  "description": "Testa cursor por cima de iframe/CAPTCHA via top-layer popover ou raiz HTML com z-index maximo; arrasto manual experimental.",
+  "name": "meo-cursor-restaurado-61",
+  "appName": "MEO CURSOR 6.1 - Restaurado",
+  "version": "0.6.1",
+  "description": "Reverte a alteracao de camadas da v6, recupera ponteiro visivel e mantem controlo manual do comando; nao garante ponteiro acima do CAPTCHA.",
   "packageType": "mods",
   "websiteURL": "https://tv.meo.pt/pt",
-  "main": "main_meo_overlay_v6.js",
+  "main": "main_meo_cursor_61.js",
   "keys": [
     "ColorF0Red",
     "ColorF1Green",

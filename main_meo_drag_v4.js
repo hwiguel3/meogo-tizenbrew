@@ -473,6 +473,7 @@
     if (key === 'ArrowDown') return 40;
     if (key === 'Enter') return 13;
     if (key === 'Escape' || key === 'Backspace' || key === 'BrowserBack' || key === 'GoBack') return 10009;
+    if (key === 'ColorF0Red') return 403;
     if (key === 'ColorF1Green' || key === 'ColorF2Yellow') return 404;
     if (key === 'ColorF3Blue') return 406;
     return ev.keyCode || ev.which || 0;
@@ -484,10 +485,11 @@
   }
   function onKey(ev) {
     var code = keyCode(ev), now = Date.now();
-    if ([37, 38, 39, 40, 13, 10009, 404, 406].indexOf(code) < 0) return;
+    if ([37, 38, 39, 40, 13, 10009, 403, 404, 405, 406].indexOf(code) < 0) return;
     if (now - lastKeyAt < 55 && ev.repeat) { stop(ev); return; }
     lastKeyAt = now;
     if (code === 406) { stop(ev); if (dragActive) dragEnd(true); toggleDiagnostics(); return; }
+    if (code === 403 && mode === 'cursor') { stop(ev); if (dragActive) dragEnd(true); clickCurrent(); return; }
     if (diagnostics && diagnostics.className.indexOf('meotb-open') >= 0) {
       if (code === 10009) { stop(ev); toggleDiagnostics(); }
       return;
@@ -556,7 +558,7 @@
       if (location.href !== lastPageURL) { lastPageURL = location.href; selected = null; }
       updateHighlight();
     }, 900);
-    notify('V4 DRAG ATIVA | Verde/Amarelo cursor | OK agarra/larga');
+    notify('V4 DRAG ATIVA | Verde cursor | OK arrasto | Vermelho clique');
     later();
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start);

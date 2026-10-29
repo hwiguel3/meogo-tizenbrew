@@ -54,3 +54,19 @@ Versão 0.1.0 – 29/10/2026.
 - Confirmar aviso `MEO Go v2` ao entrar no formulario: se nao aparecer, o script pode nao estar injetado no dominio/iframe de autenticacao.
 
 Teste pendente em Samsung Q60A fisica.
+
+## Modulo independente: MEO AZUL V3
+
+Para evitar a cache da versao 1 no TizenBrew, esta edicao usa um identificador separado:
+
+- **Referencia a adicionar:** `hwiguel3/meogo-tizenbrew@meo-azul-v3`
+- **Nome apresentado:** `MEO AZUL V3 - Login Corrigido`
+- **Identificador:** `meo-azul-login-v3`
+- **Script:** `main_meo_azul_v3.js`
+- **Versao:** `0.3.0`
+
+O ramo `main` mantem a versao anterior. Remover do TizenBrew apenas o modulo antigo, sair totalmente do TizenBrew e abrir de novo, depois adicionar a referencia com `@meo-azul-v3`.
+
+A mensagem `MEO AZUL V3 | V3 NOVA ATIVA` confirma que o script novo foi realmente carregado.
+No formulario: Baixo/Enter para ir de email a password, Cima para voltar.
+Nao foi validado fisicamente na Samsung.

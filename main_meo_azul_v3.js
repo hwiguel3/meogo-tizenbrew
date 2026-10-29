@@ -369,7 +369,8 @@
   }
   function toggleCursor() {
     mode = mode === 'focus' ? 'cursor' : 'focus';
-    notify(mode === 'cursor' ? 'Cursor livre (setas + OK); verde para voltar' : 'Selecao azul ativa');
+    if (mode === 'cursor') { cursorX = Math.round(window.innerWidth / 2); cursorY = Math.round(window.innerHeight / 2); }
+    notify(mode === 'cursor' ? 'CURSOR ATIVO: setas + OK; verde/amarelo para voltar' : 'Selecao azul ativa');
     later();
   }
   function keyCode(ev) {
@@ -380,7 +381,7 @@
     if (key === 'ArrowDown') return 40;
     if (key === 'Enter') return 13;
     if (key === 'Escape' || key === 'Backspace' || key === 'BrowserBack' || key === 'GoBack') return 10009;
-    if (key === 'ColorF1Green') return 404;
+    if (key === 'ColorF1Green' || key === 'ColorF2Yellow') return 404;
     if (key === 'ColorF3Blue') return 406;
     return ev.keyCode || ev.which || 0;
   }
@@ -399,7 +400,7 @@
       if (code === 10009) { stop(ev); toggleDiagnostics(); }
       return;
     }
-    if (code === 404) { stop(ev); toggleCursor(); return; }
+    if (code === 404 || code === 405) { stop(ev); toggleCursor(); return; }
     if (code === 10009) {
       if (mode === 'cursor') { stop(ev); mode = 'focus'; notify('Selecao azul ativa'); return; }
       if (isEditable(document.activeElement)) {

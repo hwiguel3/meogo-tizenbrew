@@ -134,3 +134,20 @@ Ao aparecer o CAPTCHA, o cursor devera permanecer visivel (se a janela do CAPTCH
 **Diagnostico:** apos sair da verificacao, abre o painel Azul e le as linhas `Cursor layer`, `Cursor parent` e `Popover disponivel`. Um motor Tizen antigo podera nao suportar popover.
 
 **Limites:** o iframe do CAPTCHA de outro dominio pode ser desenhado numa camada nativa superior e continuar a esconder este cursor. Mesmo visivel, o arrasto por eventos JavaScript sinteticos pode nao ser aceite pela verificacao (`isTrusted=false`). Para controlar uma verificacao de forma fiavel podera ser necessaria uma camada de input nativa na app TizenBrew ou um rato/touchpad real. Nao e garantido que funcione nesta Samsung.
+
+
+## Correção 0.6.1 — ponteiro desaparecido na V6
+
+A V6.0 usava `showPopover()` e tentava mover o ponteiro de `body` para `html`. Isto revelou-se incompatível com o comportamento observado na Samsung Q60A: o cursor deixou de ser visível.
+
+A versão **MEO CURSOR 6.1 - Restaurado** retira essas alterações, volta ao método de desenho da V5 (ponteiro dentro de `document.body`) e mantém as correções de login, foco e arrastamento manual. Novo ficheiro principal: `main_meo_cursor_61.js`, com novo identificador `meo-cursor-restaurado-61`.
+
+**Instalação:** remover o módulo antigo do TizenBrew, fechar totalmente a aplicação, abrir e adicionar novamente `hwiguel3/meogo-tizenbrew@meo-overlay-v6`. Confirmar o nome `MEO CURSOR 6.1 - Restaurado` e a mensagem `MEO CURSOR V6.1`.
+
+**Teste:**
+1. Abrir o MEO Go antes do CAPTCHA; premir Verde para ver o cursor azul e movê-lo com as setas.
+2. Confirmar que, ao voltar a premir Verde, o cursor desaparece (modo seleção azul).
+3. Abrir o CAPTCHA. O ponteiro pode continuar **por trás** do desafio: trata-se de um problema distinto, não resolvido por `z-index`.
+4. Se o cursor continuar invisível fora do CAPTCHA, abrir Azul e verificar `Ponteiro` e `Cursor ativo` no diagnóstico (se possível).
+
+**Limitação importante:** se o CAPTCHA for apresentado numa camada gráfica ou iframe separado e superior, este módulo JavaScript não consegue garantir que o ponteiro apareça por cima, nem que o CAPTCHA aceite arrastamentos sintéticos. Não esconder o CAPTCHA nem tentar contornar a verificação. Preferir os métodos de acessibilidade suportados pelo próprio CAPTCHA, um rato nativo ou uma aplicação Tizen com suporte a ponteiro nativo, se disponível.

@@ -1,0 +1,11 @@
+{
+  "name": "meogo-remote-tizenbrew",
+  "appName": "MEO Go - Comando Samsung (v1)",
+  "version": "0.1.0",
+  "description": "Modulo experimental TizenBrew para tv.meo.pt: navegacao pelo comando, selecao azul, scroll e diagnostico do player.",
+  "packageType": "mods",
+  "websiteURL": "https://tv.meo.pt/pt",
+  "main": "main.js",
+  "keys": ["ColorF1Green", "ColorF3Blue"],
+  "license": "MIT"
+}

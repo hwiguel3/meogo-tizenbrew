@@ -1,13 +1,14 @@
 {
-  "name": "meo-azul-login-v3",
-  "appName": "MEO AZUL V3 - Login Corrigido",
-  "version": "0.3.0",
-  "description": "Edicao independente V3 para contornar cache do modulo antigo; login email/password e navegacao azul.",
+  "name": "meo-drag-remote-v4",
+  "appName": "MEO DRAG V4 - Cursor e Arrasto",
+  "version": "0.4.0",
+  "description": "Modo experimental de arrasto por comando: verde cursor, OK agarrar/largar, setas mover; login e diagnostico.",
   "packageType": "mods",
   "websiteURL": "https://tv.meo.pt/pt",
-  "main": "main_meo_azul_v3.js",
+  "main": "main_meo_drag_v4.js",
   "keys": [
     "ColorF1Green",
+    "ColorF2Yellow",
     "ColorF3Blue"
   ],
   "license": "MIT"
